@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+int pw2(int x,int y){
+    int res=1;
+    while(y){
+        if(y&1){
+            res=res*x;
+        }
+        y>>=1;
+        x=x*x;
+    }
+    return res;
+}
+int n,m,k;
+int num;
+string cas;
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cin>>n>>m>>k;
+	num=pw2(2,n)-1;
+	if(k<m){
+		cout<<-1<<endl;
+		return 0;
+	}
+	else if(m==0){
+		for(int i=1;i<=k;i++)cout<<1;
+		for(int i=k+1;i<=num;i++)cout<<0;
+		return 0;
+	}
+	else{
+		int now=k;
+		int tmp=0;
+		for(int i=0;i<num;i++)cas+='0';
+		for(int i=0;i<m;i++){
+			cin>>tmp;
+			cas[tmp-1]='1';
+			now--;
+		}
+		for(int i=0;i<now;i++){
+			if(cas[i]=='1'){
+				now++;
+				continue;
+			}
+			cas[i]='1';
+		}
+		cout<<cas;
+	}
+	return 0;
+}

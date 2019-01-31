@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+}
+#backblock{
+    height: 100%;
+    background-color: #f0f6ff;
+    box-shadow: 0 2px 4px -1px;
+}
+#centlogo{
+    pointer-events: none;
+    height: 150px;
+    display:block;
+    margin:0 auto;
+    margin-bottom: -20px;
+}
+#container{
+    border: 1px solid black;
+}
+.submitter{
+    height: 100px;
+    line-height: 100px;
+}

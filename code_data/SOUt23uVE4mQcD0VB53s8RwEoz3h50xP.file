@@ -1,0 +1,9 @@
+Random Rdata = new Random();
+double x=Rdata.Next(0,1000);
+double y=Rdata.Next(0,1000);
+
+if (x!=Rdata.Next(0,1000) & y!=Rdata.Next(0,1000)) {
+    Console.Readline("You are SB !!!")
+} else {
+  Console.Readline("666");
+}

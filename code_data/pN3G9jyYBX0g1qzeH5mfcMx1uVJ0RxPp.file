@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn = 110;
+int n;
+int a[maxn << 1];
+int presum[maxn << 1];
+int mem1[maxn << 1][maxn << 1],mem2[maxn << 1][maxn << 1];
+int dfsLow(int l,int r){
+    if(mem1[l][r]!=-1) return mem1[l][r];
+    if(l == r) return mem1[l][r]=0;
+    int ret = 0x3f3f3f3f;
+    for(int i=l;i<r;i++){
+        ret = min(ret,dfsLow(l,i)+dfsLow(i+1,r)+presum[r]-presum[l-1]);
+    }
+    return mem1[l][r] = ret;
+}
+int dfsHigh(int l,int r){
+    if(mem2[l][r]!=-1) return mem2[l][r];
+    if(l == r) return mem2[l][r]=0;
+    int ret = -0x3f3f3f3f;
+    for(int i=l;i<r;i++){
+        ret = max(ret,dfsHigh(l,i)+dfsHigh(i+1,r)+presum[r]-presum[l-1]);
+    }
+    return mem2[l][r] = ret;
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin >> n;
+    presum[0] = 0;
+    for(int i=1;i<=n;i++){
+        cin >> a[i];
+        a[i+n] = a[i]; //头接到尾巴，化环为链 
+    }
+    for(int i=1;i<=2*n;i++){
+        presum[i] = presum[i-1] + a[i];
+    }
+    memset(mem1,-1,sizeof mem1);
+    memset(mem2,-1,sizeof mem2);
+    dfsLow(1,n*2);
+    dfsHigh(1,n*2);
+    int ans1 = 0x3f3f3f,ans2 = -0x3f3f3f3f;
+    for(int i=1;i<=n;i++){
+        ans1=min(mem1[i][n+i-1],ans1);//选出答案 
+        ans2=max(mem2[i][n+i-1],ans2);
+    }
+    cout << ans1 << endl << ans2 << endl;
+    return 0;
+}

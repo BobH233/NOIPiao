@@ -1,0 +1,36 @@
+var submiter = document.getElementById("inputer").value;
+    var intro = document.getElementById("introduct").value;
+    var langs = document.getElementById("langS").value;
+    var content = editor.getValue();
+    if(langs == 1){
+        langs = "C++";
+    }else if(langs == 2){
+        langs = "C#";
+    }else if(langs == 3){
+        langs = "Javascript";
+    }else{
+        langs = "网页漏洞发现者";
+    }
+    console.log(submiter,intro,langs,content);
+    $.ajax({
+        url:'./SubCode.php',
+        type:'POST',
+        async:true,
+        data:{
+            submiter:submiter,
+            code:content,
+            lang:langs,
+            intro:intro
+        },
+        timeout:3000,
+        dataType:'json',
+        success:function(data,textStatus,jqXHR){
+            //var obj = JSON.parse(data);
+            //Materialize.toast(data.msg, 4000);
+            console.log(data);
+            if(data.msgcode == 1){
+                aaaok = true;
+                console.log(data.msg);
+            }
+        }
+    })

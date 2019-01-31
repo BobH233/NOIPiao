@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long l,r;
+int a[30];
+int dp[30][12][2];
+long long dfs(long long pos,long long pre,bool limit,bool lead){
+    if(pos == -1) return 1;
+    if(!limit && dp[pos][pre][lead] != -1) return dp[pos][pre][lead];
+    int up = limit ? a[pos] : 9;
+    int cnt = 0;
+    for(int i=0;i<=up;i++){
+        if(!lead && abs(i - pre) < 2) continue;
+        cnt += dfs(pos-1,i,limit && i==a[pos],lead && i == 0);
+    }
+    if(!limit) dp[pos][pre][lead] = cnt;
+    return cnt;
+}
+long long solve(long long aaa){
+    int pos = 0;
+    while(aaa){
+        a[pos++] = aaa % 10;
+        aaa /= 10;
+    }
+    return dfs(pos-1,0,true,true);
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin >> l >> r;
+    memset(dp,-1,sizeof dp);
+    cout << solve(r) - solve(l-1);
+    return 0;
+}
